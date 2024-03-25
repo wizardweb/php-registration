@@ -1,7 +1,15 @@
 <?php
 
+
+require_once 'connection.php';
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+	    // Connect to the database
+    $db = new Database();
+    $conn = $db->getConnection();
+	
+
 	
     // Define your validation rules here
     $errors = [];
@@ -48,7 +56,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($_POST['password'] !== $_POST['password_confirmation']) {
         $errors['password_confirmation'] = "Passwords do not match";
     }
+	
+	// Check if the user already exists
+	$userName = $conn->real_escape_string($_POST['name']);
+	$user_query = "SELECT * FROM users WHERE username = '$userName'";
+	$result_user = $conn->query($user_query);
 
+	// Check if the email already exists
+	$email = $conn->real_escape_string($_POST['email']);
+	$email_query = "SELECT * FROM users WHERE email = '$email'";
+	$result_email = $conn->query($email_query);
+	
+	 if ($result_user->num_rows > 0) {
+	// User already exists
+	  $errors['name'] = "Username already exists";	
+	} elseif ($result_email->num_rows > 0) {
+		// Email already exists
+	   $errors['email'] = "Email already exists";
+	}
 
     // If there are no validation errors, proceed with registration
     if (empty($errors)) {
@@ -67,10 +92,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $username = $_POST['username'];
         $password = $_POST['password'];
 		
+		$hashed_password = sha1($password); // SHA1 hashing
+		
+		// Hash the password
+		$hashed_password = sha1($password);
+
+		// SQL query to insert data into the users table
+		$sql = "INSERT INTO users (name, email, telephone, address1, address2, city, stateprovince, zipcode, username, password) 
+				VALUES ('$name', '$email', '$telephone', '$address1', '$address2', '$city', '$stateprovince', '$zipcode', '$username', '$hashed_password')";
+
+			
+		
 		 // Setting session variable
 		session_start(); // Start the session if it's not already started
 		$_SESSION['name'] = $name;
 
+
+	   // Send email to the user
+		//$to = $email;
+		//$subject = "Registration";
+		//$message = "Dear $name,\n\nThank you for registering with us!";
+		//$headers = "From: test@example.com";
+
+		//if (mail($to, $subject, $message, $headers)) {
+			// Email sent successfully
+			//$response = array('success' => true);
+		//} else {
+			// Email sending failed
+			//$response = array('success' => false, 'errors' => 'Failed to send email.');
+		//}
+		
+				
+		if ($conn->query($sql) === TRUE) {
+			//echo "New record created successfully";
+			$response = array('success' => true);
+		} else {
+			 $response = array('success' => false, 'errors' => $errors);
+			//echo "Error: " . $sql . "<br>" . $conn->error;
+		}
 		
 		
         $response = array('success' => true);

@@ -23,7 +23,7 @@
                         Register
                     </div>
                     <div class="card-body">
-	     <form id="registrationForm" method="post">
+	 <form id="registrationForm" method="post">
 		 <div class="mb-3">
         <label for="name" class="form-label">Name</label>
         <input type="text" class="form-control" id="name" name="name" value="<?php echo isset($_POST['name']) ? htmlspecialchars($_POST['name']) : ''; ?>">

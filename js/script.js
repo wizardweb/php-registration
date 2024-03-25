@@ -14,7 +14,9 @@ $(document).ready(function() {
                     // If registration is successful, redirect to the success page
                     window.location.href = 'success.php';
                 } else {
-					alert('error');
+					if (response.database) {
+					alert(response.errors);
+					}
                     // If there are errors, display them next to the input fields
                     displayErrors(response.errors);
                 }
@@ -35,7 +37,7 @@ $(document).ready(function() {
         });
     }
 	
-  $('#backHomeButton').click(function() {
-            window.location.href = 'registration.php';
-        });
+	$('#backHomeButton').on('click', function() {
+    window.location.href = 'registration.php';
+	});
 });
