@@ -69,10 +69,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	
 	 if ($result_user->num_rows > 0) {
 	// User already exists
-	  $errors['name'] = "Username already exists";	
+	  $errors['name'] = "The username you have entered has already been registered with our system.  Please enter a different username";	
 	} elseif ($result_email->num_rows > 0) {
 		// Email already exists
-	   $errors['email'] = "Email already exists";
+	   $errors['email'] = "The Email you have entered has already been registered with our system.  Please enter a different Email";
 	}
 
     // If there are no validation errors, proceed with registration
