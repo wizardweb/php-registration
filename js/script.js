@@ -34,4 +34,8 @@ $(document).ready(function() {
 			$errorElement.css('display', 'block'); 
         });
     }
+	
+  $('#backHomeButton').click(function() {
+            window.location.href = 'registration.php';
+        });
 });

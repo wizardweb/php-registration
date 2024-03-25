@@ -31,11 +31,11 @@
 						echo "<p>Thank you for registering!</p>";
 					}
 					?>
-                    <button class="btn btn-primary">Back Home</button>
+                    <button class="btn btn-primary" id="backHomeButton">Back Home</button>
                 </div>
             </div>
     <div>
-       
-
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="js/script.js"></script>
 </body>
 </html>

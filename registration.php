@@ -33,7 +33,7 @@
 
     <div class="mb-3">
         <label for="email" class="form-label">Email</label>
-        <input type="text" class="form-control" id="email" name="email" value="">
+        <input type="text" class="form-control" id="email" name="email" value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
          <div class="text-danger"></div>
 
     </div>

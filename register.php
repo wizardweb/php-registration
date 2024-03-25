@@ -66,6 +66,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $zipcode = $_POST['zipcode'];
         $username = $_POST['username'];
         $password = $_POST['password'];
+		
+		 // Setting session variable
+		session_start(); // Start the session if it's not already started
+		$_SESSION['name'] = $name;
+
+		
+		
         $response = array('success' => true);
     } else {
         // Registration failed due to validation errors
